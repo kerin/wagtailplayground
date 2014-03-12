@@ -87,14 +87,19 @@ WSGI_APPLICATION = 'yau.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'yau',
+#         'USER': 'yau',
+#         'PASSWORD': 'yau',
+#         'HOST': '127.0.0.1',
+#     }
+# }
+import dj_database_url
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'yau',
-        'USER': 'yau',
-        'PASSWORD': 'yau',
-        'HOST': '127.0.0.1',
-    }
+    'default': dj_database_url.config(
+        default='postgres://yau:yau@127.0.0.1:5432/yau')
 }
 
 # Internationalization

@@ -1,0 +1,2 @@
+git+https://github.com/ipython/ipython.git#egg=ipython
+django-debug-toolbar==1.0.1

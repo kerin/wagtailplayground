@@ -1,0 +1,17 @@
+{% extends base %}
+
+{% block content %}
+
+<h1>{{ self.title }}</h1>
+
+<ul>
+{% for page in self.get_children %}
+    <li>
+        <a href="{{ page.url }}">
+            {{ page.title }}
+        </a>
+    </li>
+{% endfor %}
+</ul>
+
+{% endblock %}

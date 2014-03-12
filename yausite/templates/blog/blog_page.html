@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load rich_text %}
+
+{% block content %}
+
+<h1>{{ self.title }}</h1>
+
+<p>Date: {{ self.date }}</p>
+
+{{ self.body|richtext }}
+
+{% endblock %}

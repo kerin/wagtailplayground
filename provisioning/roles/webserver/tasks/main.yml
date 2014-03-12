@@ -1,0 +1,14 @@
+---
+  - name: install python dependencies
+    apt: pkg={{ item }} state=installed
+    with_items:
+      - libpq-dev
+      - libxml2-dev
+      - libxslt1-dev
+      - libjpeg8-dev
+      - zlib1g-dev
+      - libfreetype6-dev
+      - libtiff4-dev
+
+  - name: install production python packages
+    pip: requirements={{ project_root }}/requirements/production.txt

@@ -1,0 +1,12 @@
+{% extends base %}
+{% load rich_text %}
+
+{% block content %}
+<h1>
+    <a href="{{ self.get_parent.url }}">{{ self.get_parent.title }}</a>
+    &gt; {{ self.title }}
+</h1>
+
+{{ self.body|richtext }}
+
+{% endblock %}

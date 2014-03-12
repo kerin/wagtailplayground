@@ -1,0 +1,18 @@
+---
+- hosts: all
+  remote_user: vagrant
+  sudo: yes
+
+  vars:
+    project_root: /vagrant
+    user: vagrant
+    user_home: /home/vagrant
+    db_name: yau
+    db_user: yau
+    db_password: yau
+
+  roles:
+    - role: common
+    - role: dev
+    - role: webserver
+    - role: dbserver

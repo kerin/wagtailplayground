@@ -1,0 +1,27 @@
+---
+- name: update apt
+  apt: update_cache=yes cache_valid_time=86400
+
+- name: install base packages
+  apt: pkg={{ item }} state=installed
+  with_items:
+    - build-essential
+    - python-setuptools
+    - python-dev
+    - python-software-properties
+    - git
+    - sudo
+    - zsh
+
+- name: install oh my zsh
+  git: repo=git://github.com/robbyrussell/oh-my-zsh.git
+       dest={{ user_home }}/.oh-my-zsh
+
+- name: set .zshrc
+  copy: src=zshrc dest={{ user_home }}/.zshrc
+
+- name: set shell
+  user: name={{ user }} shell=/usr/bin/zsh
+
+- name: install pip
+  easy_install: name=pip

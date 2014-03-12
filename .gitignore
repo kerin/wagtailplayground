@@ -1,0 +1,7 @@
+/vagrant_ansible_inventory_default
+
+/.vagrant/
+
+/yausite/.sass-cache/
+
+/yausite/static/CACHE/

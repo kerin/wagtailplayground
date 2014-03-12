@@ -1,1 +1,1 @@
-web: gunicorn yausite.yau.wsgi:application
+web: gunicorn yausite.wsgi:application

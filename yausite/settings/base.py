@@ -79,9 +79,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
 )
 
-ROOT_URLCONF = 'yau.urls'
+ROOT_URLCONF = 'yausite.urls'
 
-WSGI_APPLICATION = 'yau.wsgi.application'
+WSGI_APPLICATION = 'yausite.wsgi.application'
 
 
 # Database

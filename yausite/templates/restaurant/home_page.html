@@ -6,6 +6,7 @@
 
 {{ self.intro|richtext }}
 
+<h2>Promos</h2>
 <ul>
 {% for featured_section in self.featured_sections.all %}
 <li>
@@ -28,6 +29,13 @@
     </ul>
 
 </li>
+{% endfor %}
+</ul>
+
+<h2>Menus</h2>
+<ul>
+{% for menupage in self.menu_pages %}
+    <li><a href="{{ menupage.url }}">{{ menupage.title }}</a></li>
 {% endfor %}
 </ul>
 

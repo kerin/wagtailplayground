@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load rich_text %}
+
+{% block content %}
+<h1>{{ self.title }}</h1>
+
+<div class="intro">
+    {{ self.intro|richtext }}
+</div>
+
+{% for section in self.sections %}
+<div class="section row">
+    <h2>{{ section.title }}</h2>
+    {{ section.intro|richtext }}
+
+    <ul class="col-md-6">
+    {% for item in section.menu_items.all %}
+        <li{% if item.featured %} class="featured"{% endif %}>
+            <h3>{{ item.name }}</h3>
+            {{ item.description|richtext }}
+            <p class="pricing"><strong>{{ item.pricing}}</strong></p>
+        </li>
+    {% endfor %}
+    </ul>
+</div>
+{% endfor %}
+
+<div class="footer">
+    {{ self.footer|richtext }}
+</div>
+
+{% endblock %}

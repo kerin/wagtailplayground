@@ -56,6 +56,14 @@ class HomePageFeaturedSection(Orderable):
 class HomePage(Page):
     intro = RichTextField()
 
+    @property
+    def menu_lists(self):
+        return MenuList.objects.filter(path__startswith=self.path).order_by('path')
+
+    @property
+    def menu_pages(self):
+        return MenuPage.objects.filter(path__startswith=self.path).order_by('path')
+
     def serve(self, request):
         return ajax_serve(self, request)
 
@@ -63,4 +71,53 @@ HomePage.content_panels = [
     FieldPanel('title', classname='full title'),
     FieldPanel('intro', classname='full'),
     InlinePanel(HomePage, 'featured_sections', label='Featured sections')
+]
+
+
+class MenuList(Page):
+    intro = RichTextField(blank=True, default='')
+
+MenuList.content_panels = [
+    FieldPanel('title', classname='full title'),
+    FieldPanel('intro', classname='full'),
+]
+
+
+class MenuItem(Orderable):
+    section = ParentalKey('restaurant.MenuSection', related_name='menu_items')
+    name = models.CharField(max_length=254)
+    description = RichTextField(blank=True, default='')
+    pricing = models.CharField(max_length=254)
+    featured = models.BooleanField(default=False)
+
+    panels = [
+        FieldPanel('name'),
+        FieldPanel('description'),
+        FieldPanel('pricing'),
+        FieldPanel('featured'),
+    ]
+
+
+class MenuPage(Page):
+    intro = RichTextField(blank=True, default='')
+    footer = RichTextField(blank=True, default='')
+
+    @property
+    def sections(self):
+        return MenuSection.objects.filter(path__startswith=self.path).order_by('path')
+
+MenuPage.content_panels = [
+    FieldPanel('title', classname='full title'),
+    FieldPanel('intro', classname='full'),
+    FieldPanel('footer', classname='full'),
+]
+
+
+class MenuSection(Page):
+    intro = RichTextField(blank=True, default='')
+
+MenuSection.content_panels = [
+    FieldPanel('title', classname='full title'),
+    FieldPanel('intro', classname='full'),
+    InlinePanel(MenuSection, 'menu_items', label='Menu Items'),
 ]

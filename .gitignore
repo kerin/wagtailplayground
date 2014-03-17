@@ -2,6 +2,6 @@
 
 /.vagrant/
 
-/yausite/.sass-cache/
-
-/yausite/static/CACHE/
+/yausite/static/*
+/yausite/assets/js/vendor/
+/node_modules/

@@ -1,0 +1,29 @@
+{
+  "name": "yau",
+  "version": "0.0.0",
+  "homepage": "https://github.com/kerin/wagtailplayground",
+  "authors": [
+    "Kerin Cosford <cosford@gmail.com>"
+  ],
+  "description": "yausite",
+  "main": "yausite/assets/js/main.js",
+  "moduleType": [
+    "amd"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "yausite/assets/js/vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.0",
+    "requirejs": "~2.1.11",
+    "sammy": "~0.7.5",
+    "handlebars": "~1.3.0"
+  }
+}

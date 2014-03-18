@@ -28,7 +28,7 @@ def ajax_serve(obj, request):
 
 
 class Section(Page):
-    intro = RichTextField()
+    intro = RichTextField(blank=True, null=True)
 
     def serve(self, request):
         return ajax_serve(self, request)

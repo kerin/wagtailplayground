@@ -43,6 +43,8 @@ Section.content_panels = [
 
 class BlogPost(Page):
     body = RichTextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def serve(self, request):
         return ajax_serve(self, request)

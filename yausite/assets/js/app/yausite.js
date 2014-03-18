@@ -16,9 +16,11 @@ require(['jquery', 'backbone', 'HomepageAppRouter', 'views/HomePageAppView'],
 
         }else{
 
+            /*
             window.onpopstate = function(e){
                 window.location.replace(window.location.href);
             }
+            */
 
         }
 

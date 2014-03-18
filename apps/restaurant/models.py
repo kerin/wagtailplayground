@@ -1,5 +1,9 @@
+import json
+
 from django.db import models
-from django.template.response import TemplateResponse
+from django.http import HttpResponse
+from django.template import RequestContext
+from django.template.loader import render_to_string
 
 from modelcluster.fields import ParentalKey
 
@@ -12,10 +16,17 @@ from wagtail.wagtailadmin.edit_handlers import (FieldPanel,
 def ajax_serve(obj, request):
     base = 'base_fragment.html' if request.is_ajax() else 'base.html'
 
-    return TemplateResponse(request, obj.template, {
+    ctx = RequestContext(request, {
         'base': base,
         'self': obj
     })
+    html = render_to_string(obj.template, ctx)
+
+    if request.is_ajax():
+        return HttpResponse(json.dumps({'html': html}),
+                            content_type='application/json')
+    else:
+        return HttpResponse(html)
 
 
 class Section(Page):

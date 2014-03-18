@@ -6,37 +6,41 @@
 
 {{ self.intro|richtext }}
 
-<h2>Promos</h2>
-<ul>
-{% for featured_section in self.featured_sections.all %}
-<li>
-    <h2>
-        <a href="{{ featured_section.section.url }}">
-            {{ featured_section.section.title }}
-        </a>
-    </h2>
-
+<div id="homepage">
+    <h2>Promos</h2>
     <ul>
-    {% for page in featured_section.section.get_children %}
+    {% for featured_section in self.featured_sections.all %}
     <li>
-        <h3>
-            <a href="{{ page.url }}">
-                {{ page.title }}
+        <h2>
+            <a href="{{ featured_section.section.url }}">
+                {{ featured_section.section.title }}
             </a>
-        </h3>
+        </h2>
+
+        <ul>
+        {% for page in featured_section.section.get_children %}
+        <li>
+            <h3>
+                <a href="{{ page.url }}">
+                    {{ page.title }}
+                </a>
+            </h3>
+        </li>
+        {% endfor %}
+        </ul>
+
     </li>
     {% endfor %}
     </ul>
+</div>
 
-</li>
-{% endfor %}
-</ul>
+<div id="article"></div>
 
-<h2>Menus</h2>
+<!--h2>Menus</h2>
 <ul>
 {% for menupage in self.menu_pages %}
     <li><a href="{{ menupage.url }}">{{ menupage.title }}</a></li>
 {% endfor %}
-</ul>
+</ul-->
 
 {% endblock %}

@@ -27,14 +27,14 @@ module.exports = function(grunt) {
             compile_site: {
                 //Require JS compile task
                 options: {
-                    mainConfigFile: "yausite/assets/js/require_config.js",
+                    mainConfigFile: "yausite/assets/js/app/require_config.js",
                     optimize: 'none'
                 }
             },
             optimize: {
                 //Require JS compile task
                 options: {
-                    mainConfigFile: "yausite/assets/js/require_config.js",
+                    mainConfigFile: "yausite/assets/js/app/require_config.js",
                     optimize: 'uglify2'
                 }
             },
@@ -99,7 +99,7 @@ module.exports = function(grunt) {
                     linebreak: true,
                 },
                 files: {
-                    src: ['yausite/static/js/main.js']
+                    src: ['yausite/static/js/yausite.js']
                 }
             }
         },

@@ -14,6 +14,12 @@ require(['jquery', 'backbone', 'HomepageAppRouter', 'views/HomePageAppView'],
                 pushState: true
             });
 
+        }else{
+
+            window.onpopstate = function(e){
+                window.location.replace(window.location.href);
+            }
+
         }
 
     });

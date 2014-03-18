@@ -11,7 +11,11 @@ define(['backbone', 'models/ArticleModel'], function(Backbone, ArticleModel){
         },
 
         changePath: function(){
-            this.model.fetch();
+            if(this.model.get('path')){
+                this.model.fetch();
+            }else{
+                this.model.set('html', null);
+            }
         },
 
         render: function(){

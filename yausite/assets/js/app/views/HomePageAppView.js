@@ -20,9 +20,7 @@ define(['backbone', 'views/ArticleView'], function(Backbone, ArticleView){
         },
 
         showPost: function(path){
-            if(path){
-                this.articleView.model.set('path', path);
-            }
+            this.articleView.model.set('path', path);
         }
 
     });

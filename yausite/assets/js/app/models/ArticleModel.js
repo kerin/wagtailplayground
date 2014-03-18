@@ -5,7 +5,7 @@ define(['backbone'], function(Backbone){
         urlRoot: '/',
 
         url: function(){
-            return this.urlRoot + this.get('path');
+            return this.urlRoot + this.get('path') + '?json=true';
         }
 
     });

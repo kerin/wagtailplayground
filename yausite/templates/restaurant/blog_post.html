@@ -3,10 +3,21 @@
 
 {% block content %}
 <h1>
-    <a href="{{ self.get_parent.url }}">{{ self.get_parent.title }}</a>
-    &gt; {{ self.title }}
+    {{ self.title }}
 </h1>
 
 {{ self.body|richtext }}
+
+{% if self.previous %}
+<p>
+    <a href="{{ self.previous.url }}">Previous - {{ self.previous.title }}</a>
+</p>
+{% endif %}
+
+{% if self.next %}
+<p>
+    <a href="{{ self.next.url }}">Next - {{ self.next.title }}</a>
+</p>
+{% endif %}
 
 {% endblock %}

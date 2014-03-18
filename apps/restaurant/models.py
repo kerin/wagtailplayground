@@ -14,10 +14,8 @@ from wagtail.wagtailadmin.edit_handlers import (FieldPanel,
 
 
 def ajax_serve(obj, request):
-    base = 'base_fragment.html' if request.is_ajax() else 'base.html'
-
     ctx = RequestContext(request, {
-        'base': base,
+        'base': 'base_fragment.html' if request.is_ajax() else 'base.html',
         'self': obj
     })
     html = render_to_string(obj.template, ctx)
@@ -61,7 +59,19 @@ class BlogPost(Page):
             return None
 
     def serve(self, request):
-        return ajax_serve(self, request)
+        ctx = {
+            'base': 'base_fragment.html' if request.is_ajax() else 'base.html',
+            'self': self,
+            'next': self.next,
+            'previous': self.previous,
+        }
+        html = render_to_string(self.template, RequestContext(request, ctx))
+
+        if request.is_ajax():
+            return HttpResponse(json.dumps({'html': html}),
+                                content_type='application/json')
+        else:
+            return HttpResponse(html)
 
 
 BlogPost.content_panels = [

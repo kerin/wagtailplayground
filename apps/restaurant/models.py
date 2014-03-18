@@ -46,6 +46,20 @@ class BlogPost(Page):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    @property
+    def next(self):
+        try:
+            return self.get_next_by_created_at(live=True)
+        except BlogPost.DoesNotExist:
+            return None
+
+    @property
+    def previous(self):
+        try:
+            return self.get_previous_by_created_at(live=True)
+        except BlogPost.DoesNotExist:
+            return None
+
     def serve(self, request):
         return ajax_serve(self, request)
 

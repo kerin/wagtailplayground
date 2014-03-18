@@ -147,3 +147,5 @@ LOGIN_URL = 'django.contrib.auth.views.login'
 LOGIN_REDIRECT_URL = 'wagtailadmin_home'
 
 WAGTAIL_SITE_NAME = 'wagtaildemo'
+
+EMBEDLY_KEY = 'dd734353ce9d4f5994f7b028177e01e4'

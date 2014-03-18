@@ -47,14 +47,18 @@ class BlogPost(Page):
     @property
     def next(self):
         try:
-            return self.get_next_by_created_at(live=True)
+            parent_path = self.get_parent().path
+            return self.get_next_by_created_at(live=True,
+                                               path__startswith=parent_path)
         except BlogPost.DoesNotExist:
             return None
 
     @property
     def previous(self):
         try:
-            return self.get_previous_by_created_at(live=True)
+            parent_path = self.get_parent().path
+            return self.get_previous_by_created_at(live=True,
+                                                   path__startswith=parent_path)
         except BlogPost.DoesNotExist:
             return None
 

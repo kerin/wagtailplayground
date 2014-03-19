@@ -166,8 +166,8 @@ class MenuItem(Orderable):
 
     panels = [
         FieldPanel('name'),
-        FieldPanel('description'),
         FieldPanel('pricing'),
+        FieldPanel('description'),
         FieldPanel('featured'),
     ]
 

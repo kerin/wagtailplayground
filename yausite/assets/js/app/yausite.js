@@ -1,4 +1,4 @@
-require(['jquery', 'backbone', 'HomepageAppRouter', 'views/HomePageAppView'],
+require(['jquery', 'backbone', 'HomepageAppRouter', 'views/HomePageAppView', 'gmaps'],
         function($, Backbone, HomePageAppRouter, HomePageAppView) {
 
     window.YAU = window.YAU || {};

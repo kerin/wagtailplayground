@@ -8,6 +8,16 @@
 
 {{ self.body|richtext }}
 
+{% if self.google_map_url %}
+<div class="gmap"
+    data-longitude="{{ self.google_map_longitude }}"
+    data-latitude="{{ self.google_map_latitude }}"
+    data-zoomlevel="{{ self.google_map_zoomlevel }}"
+    style="width: 750px; height: 500px;">
+</div>
+{% endif %}
+
+
 {% if self.previous %}
 <p>
     <a href="{{ self.previous.url }}">Previous - {{ self.previous.title }}</a>

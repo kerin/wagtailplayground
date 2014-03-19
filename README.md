@@ -31,6 +31,16 @@ MenuPage (type: Page)
         MenuItem (type: Model)
 ```
 
+So, menu item **objects** are edited as inlines on menu section **pages** which are child pages of menu pages. Menu section pages do not need to be treated as actual pages by the frontend, or appear in navigation menus.
+
+For ease of use in templates, MenuPage models have a `sections` property, which uses the MPTT path to efficiently retrieve child MenuSections only:
+
+```
+@property
+def sections(self):
+    return MenuSection.objects.filter(path__startswith=self.path).order_by('path')
+```
+
 
 ## Content panels
 
@@ -60,3 +70,27 @@ Page content panels define which fields are available in Wagtail admin edit/crea
 `content_panels` are defined outside of the class definition seemingly because InlinePanel requires the class name of the page as its first argument.
 
 `panels` are applicable to non-page objects that are included as inlines, and as they can't include InlinePanels themselves, they can be defined directly in the class definition.
+
+## Maps
+`apps.restaurant.models` contains an abstract django model, `MapModel`, which provides a google map URL field, which validates for a [new-style Google maps URL](https://www.google.com/maps/place/Berwick+St/@51.5142102,-0.1343658,17z), and provides longitude, latitude and zoomlevel properties via regexing the URL. This could be handled as a custom django field type instead, but this was the simplest approach in the short term.
+
+## Known Issues
+
+1. There seems to be an issue where pages lose their computed URLs if the root page is renamed - this has been [filed as a bug](https://github.com/torchbox/wagtail/issues/157)
+2. Page DateTimeFields using the `auto_now_add` argument seem to cause a DB error on save. The root cause of this hasn't been uncovered, but it seems to be related to Wagtail's use of [django-modelcluster](https://pypi.python.org/pypi/django-modelcluster). This can be worked around in the models' `save()` method until this is fixed in Wagtail.
+
+
+Frontend notes
+==============
+
+The frontend currently uses require.js for JS management, and Backbone.js for the homepage 'app'. The structure of this is on the quick and dirty side, but is really only a placeholder at present. There are however...
+
+## Known Issues
+
+### History handling
+There is a browser history-related bug in webkit browsers which manifests itself when multiple backbone URL pushstates have occurred, then one of the detail URLs is hit directly in the same browser window - hitting the back button changes the URL but does not change the page.
+
+This is arguably an edge case, but this could potentially also be worked around by using hash links in Backbone world and issuing a redirect to detail pages on initial page load where necessary, or by monitoring window.onpushstate on pages other than the homepage, or possibly by using a custom Backbone router. Or by not using Backbone.
+
+### JS on homepage HTML fragments
+As Backbone retrieves and displays fragments of full HTML detail pages, any Javascript required for that fragment (ie. Google Maps) must be executed after Backbone has rendered the view - see the use of gmaps.js as an example.

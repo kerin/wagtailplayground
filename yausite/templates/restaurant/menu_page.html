@@ -17,7 +17,7 @@
     {% for item in section.menu_items.all %}
         <li{% if item.featured %} class="featured"{% endif %}>
             <h3>{{ item.name }}</h3>
-            {{ item.description|richtext }}
+            <p>{{ item.description }}</p>
             <p class="pricing"><strong>{{ item.pricing}}</strong></p>
         </li>
     {% endfor %}

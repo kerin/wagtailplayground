@@ -9,7 +9,7 @@ def grunt():
 
 
 def git_add_deploy_assets():
-    local('git add yausite/deploy/*')
+    local('git add --all yausite/deploy/*')
 
 
 def git_commit():

@@ -106,22 +106,6 @@ module.exports = function(grunt) {
                     stdout: true
                 },
                 command: 'python manage.py collectstatic --noinput'
-            },
-        },
-        shell: {
-            commitstatic: {
-                options: {
-                    stdout: true
-                },
-                command: "git add yausite/deploy/* && git commit -m 'Updated deploy assets'"
-            }
-        },
-        shell: {
-            push: {
-                options: {
-                    stdout: true
-                },
-                command: 'git push heroku master'
             }
         }
     });

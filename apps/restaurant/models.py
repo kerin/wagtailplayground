@@ -1,9 +1,11 @@
 import json
+import re
 
 from django.db import models
 from django.http import HttpResponse
 from django.template import RequestContext
 from django.template.loader import render_to_string
+from django.core.exceptions import ValidationError
 
 from modelcluster.fields import ParentalKey
 
@@ -11,6 +13,8 @@ from wagtail.wagtailcore.models import Page, Orderable
 from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailadmin.edit_handlers import (FieldPanel,
                                                 InlinePanel, PageChooserPanel)
+
+GMAPS_URL_PATTERN = re.compile(r'^http(s)?:\/\/.*\/@([0-9\.-]+),([0-9\.-]+),(\d+)z')
 
 
 def ajax_serve(obj, request):
@@ -39,16 +43,44 @@ Section.content_panels = [
 ]
 
 
-class BlogPost(Page):
+def validate_google_maps_url(value):
+    if GMAPS_URL_PATTERN.match(value) is None:
+        raise ValidationError('Not a valid new-style Google Maps URL')
+
+
+class MapModel(models.Model):
+    google_map_url = models.URLField(max_length=256, blank=True, null=True,
+                                     validators=[validate_google_maps_url],
+                                     help_text='New-style Google Maps URL')
+
+    class Meta:
+        abstract = True
+
+    @property
+    def google_map_latitude(self):
+        m = GMAPS_URL_PATTERN.match(self.google_map_url)
+        return m.group(2) if m else None
+
+    @property
+    def google_map_longitude(self):
+        m = GMAPS_URL_PATTERN.match(self.google_map_url)
+        return m.group(3) if m else None
+
+    @property
+    def google_map_zoomlevel(self):
+        m = GMAPS_URL_PATTERN.match(self.google_map_url)
+        return m.group(4) if m else None
+
+
+class BlogPost(Page, MapModel):
     body = RichTextField()
-    created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     @property
     def next(self):
         try:
             parent_path = self.get_parent().path
-            return self.get_next_by_created_at(live=True,
+            return self.get_next_by_updated_at(live=True,
                                                path__startswith=parent_path)
         except BlogPost.DoesNotExist:
             return None
@@ -57,7 +89,7 @@ class BlogPost(Page):
     def previous(self):
         try:
             parent_path = self.get_parent().path
-            return self.get_previous_by_created_at(live=True,
+            return self.get_previous_by_updated_at(live=True,
                                                    path__startswith=parent_path)
         except BlogPost.DoesNotExist:
             return None
@@ -80,7 +112,8 @@ class BlogPost(Page):
 
 BlogPost.content_panels = [
     FieldPanel('title', classname='full title'),
-    FieldPanel('body', classname='full')
+    FieldPanel('body', classname='full'),
+    FieldPanel('google_map_url'),
 ]
 
 

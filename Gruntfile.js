@@ -66,22 +66,19 @@ module.exports = function(grunt) {
                 src: 'yausite/assets/js/vendor/requirejs/require.js',
                 dest: 'yausite/static/js/require.js'
             },
-            tostatic: {
+            todeploy: {
                 files: [
                     {
                         expand: true,
-                        cwd: 'yausite/static/js/built',
+                        cwd: 'yausite/static',
                         src: '**',
-                        dest: 'yausite/static/js/'
-                    },
-                    {
-                        expand: true,
-                        cwd: 'yausite/static/css/',
-                        src: '**',
-                        dest: 'yausite/css'
+                        dest: 'yausite/deploy'
                     }
                 ]
             }
+        },
+        clean: {
+            deploy: ["yausite/deploy"]
         },
         bower: {
             install: {
@@ -110,6 +107,22 @@ module.exports = function(grunt) {
                 },
                 command: 'python manage.py collectstatic --noinput'
             },
+        },
+        shell: {
+            commitstatic: {
+                options: {
+                    stdout: true
+                },
+                command: "git add yausite/deploy/* && git commit -m 'Updated deploy assets'"
+            }
+        },
+        shell: {
+            push: {
+                options: {
+                    stdout: true
+                },
+                command: 'git push heroku master'
+            }
         }
     });
 
@@ -117,6 +130,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-bower-task');
     grunt.loadNpmTasks('grunt-banner');
     grunt.loadNpmTasks('grunt-shell');
@@ -125,6 +139,6 @@ module.exports = function(grunt) {
     grunt.registerTask('default', ['bower:install', 'copy:require', 'requirejs:compile_site', 'usebanner:compile_banner', 'sass:compile_site', 'watch']);
 
     //RUN PRE DEPLOY
-    grunt.registerTask('deploy', ['shell:collectstatic', 'bower:install', 'copy:require', 'requirejs:optimize', 'usebanner:compile_banner', 'sass:optimize'])
+    grunt.registerTask('deploy', ['shell:collectstatic', 'bower:install', 'copy:require', 'requirejs:optimize', 'usebanner:compile_banner', 'sass:optimize', 'clean:deploy', 'copy:todeploy'])
 
 };

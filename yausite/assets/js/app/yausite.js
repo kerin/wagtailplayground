@@ -1,5 +1,5 @@
 require(['jquery', 'backbone', 'HomepageAppRouter', 'views/HomePageAppView', 'gmaps'],
-        function($, Backbone, HomePageAppRouter, HomePageAppView) {
+        function($, Backbone, HomePageAppRouter, HomePageAppView, gmaps) {
 
     window.YAU = window.YAU || {};
 
@@ -25,5 +25,7 @@ require(['jquery', 'backbone', 'HomepageAppRouter', 'views/HomePageAppView', 'gm
         }
 
     });
+
+    gmaps();
 
 });

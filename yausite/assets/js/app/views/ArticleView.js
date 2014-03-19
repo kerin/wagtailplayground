@@ -1,4 +1,5 @@
-define(['backbone', 'models/ArticleModel'], function(Backbone, ArticleModel){
+define(['backbone', 'models/ArticleModel', 'gmaps'],
+    function(Backbone, ArticleModel, gmaps){
 
     var ArticleView = Backbone.View.extend({
 
@@ -20,6 +21,7 @@ define(['backbone', 'models/ArticleModel'], function(Backbone, ArticleModel){
 
         render: function(){
             this.$el.html(this.model.get('html'));
+            gmaps();
             return this;
         }
 

@@ -160,7 +160,8 @@ MenuList.content_panels = [
 class MenuItem(Orderable):
     section = ParentalKey('restaurant.MenuSection', related_name='menu_items')
     name = models.CharField(max_length=254)
-    description = RichTextField(blank=True, default='')
+    #description = RichTextField(blank=True, default='')
+    description = models.TextField(blank=True, default='')
     pricing = models.CharField(max_length=254)
     featured = models.BooleanField(default=False)
 

@@ -1,6 +1,37 @@
 {% extends "wagtailadmin/skeleton.html" %}
 {% load wagtailadmin_nav %}
 
+{% block css %}
+    {{ block.super }}
+    <style type="text/css">
+    .field-name {
+        width: 85%;
+        margin-left: 0;
+        float: left;
+    }
+
+    .field-pricing {
+        width: 10%;
+        margin-left: 20px;
+        float: left;
+    }
+    </style>
+{% endblock %}
+
+{% block js %}
+    {{ block.super }}
+    <script>
+    $(document).ready(
+        $('#id_menu_items-FORMS .fields li').each(function(idx, el){
+            var name = $(el).find('.field input').attr('name');
+            var parts = name.split('-');
+            name = parts[parts.length-1];
+            $(el).addClass('field-' + name);
+        })
+    );
+    </script>
+{% endblock %}
+
 {% block furniture %}
     <div class="nav-wrapper">
         <div class="inner">
